@@ -6,13 +6,14 @@ Due to changes and issues with other social networks, in 2022 there has been a s
 
 This bot is designed to provide content moderation assistance to Mastodon instance administrators, making the "needle in a haystack" challenge of catching  and addressing hate speech and toxicity easier in the fediverse.  In so doing, it also reduces a potential hurdle that may be stopping people from starting smaller servers which would expand the Fediverse, spreading out the capacity to handle growth, and creating safer, more identity-aligned spaces for new users.
 
+# Initial approach
 The approach simply watches a feed for status updates and uses machine learning models to determine whether a status update contains offensive text.  It has been shown that such models have the unfortunate potential to flag text by members of disadvantaged and marginalized groups at a higher rate, so we use a library called Detoxify that is specifically fine-tuned to remove bias in text toxicity classification when possible.  
 
-TODO: optional Perspective API fallback for Asian language support
+# TODO
 
-TODO: image classification models for NSFW and gore detection
-
-TODO: call to support network for victims of identity attack??
+* optional Perspective API fallback for Asian language support
+* image classification models for NSFW and gore detection
+* call to support network for victims of identity attack??
 
 When any of the above methods returns a score that exceeds a threshold set by the bot operator, the status and its user are reported to the instance moderator.  Note that this action does not require administrator settings.  The bot should not be used to automatically remove statuses based upon algorithmic detection; many of the cases which have angered BIPOC and/or LGBTQ+ Mastodon users involve statuses being flagged and removed in error, leading them to feel silenced.  A human should always make the decision whether to take action regarding a report.
 
