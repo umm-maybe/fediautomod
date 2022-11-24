@@ -9,12 +9,13 @@ This bot is designed to provide content moderation assistance to Mastodon instan
 # Initial approach
 The approach simply watches a feed for status updates and uses machine learning models to determine whether a status update contains offensive text.  It has been shown that such models have the unfortunate potential to flag text by members of disadvantaged and marginalized groups at a higher rate, so we use a library called Detoxify that is specifically fine-tuned to remove bias in text toxicity classification when possible.  
 
+When Detoxify returns a score that exceeds a threshold set by the bot operator, the status and its user are reported to the instance moderator.  Note that this action does not require administrator settings.  The bot should not be used to automatically remove statuses based upon algorithmic detection; many of the cases which have angered BIPOC and/or LGBTQ+ Mastodon users involve statuses being flagged and removed in error, leading them to feel silenced.  A human should always make the decision whether to take action regarding a report.
+
 # TODO
 
+* negative keyword search for always-problematic slurs
 * optional Perspective API fallback for Asian language support
 * image classification models for NSFW and gore detection
 * call to support network for victims of identity attack??
-
-When any of the above methods returns a score that exceeds a threshold set by the bot operator, the status and its user are reported to the instance moderator.  Note that this action does not require administrator settings.  The bot should not be used to automatically remove statuses based upon algorithmic detection; many of the cases which have angered BIPOC and/or LGBTQ+ Mastodon users involve statuses being flagged and removed in error, leading them to feel silenced.  A human should always make the decision whether to take action regarding a report.
 
 This raises the issue of potentially multiple copies of this bot issuing essentially identical automated reports regarding the same status.  It's not clear how to prevent that possibility; maybe there's some way the bot could coordinate with other copies of itself by posting a status update indicating when it has reported something (with content warning on the original status) and some sort of code or tag identifying it as an automod bot.
