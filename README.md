@@ -2,7 +2,7 @@
 Content moderation support bot for the Fediverse (Mastodon etc.)
 
 # Motivation
-Due to changes and issues with other social networks, in 2022 there has been a surge of interest in [Mastodon](https://joinmastodon.org), with thousands of new users joining the service. Unfortunately, many of them were misled into joining already-large servers, where content moderation had already proven to be a major challenge. 
+Due to changes and issues with other social networks, in 2022 there has been a surge of interest in [Mastodon](https://joinmastodon.org), with thousands of new users joining the service. Unfortunately, many of them were misled into joining already-large servers, where content moderation had already proven to be a major challenge.
 
 This bot is designed to provide content moderation assistance to Mastodon instance administrators, making the "needle in a haystack" challenge of catching and addressing hate speech and toxicity easier in the fediverse. In so doing, it also reduces a potential hurdle that could stop people from starting smaller servers which would expand the Fediverse, spreading out the capacity to handle growth, and creating safer, more easily moderated spaces for new users.
 
@@ -23,6 +23,9 @@ You will need a server or other always-on computer to run this on, with Python a
 6. Create and enter a new Python environment with `python3 -m venv env && source env/bin/activate`
 7. Run `pip install -r requirements.txt`
 8. Run the bot with `python3 automod.py config.yaml`
+
+# Configuration options
+You can edit the YAML-format configuration file to set which Detoxify labels you want to monitor and at which threshold values you want to report status updates. Detoxify scores are like probabilities, so setting a number like 0.8 means report if the model is 80% sure that an update is toxic. Though not shown in the example file, Detoxify has a `sexual_explicit` label that could be used to flag NSFW language in instances where that behavior violates server rules.  Adding this label to the config file would include it in the list of attributes to monitor; likewise the bot will not pay attention to attributes that are removed from the list.
 
 # Limitations
 Currently the bot only works in English.  It also does nothing with images. See [issues](https://github.com/umm-maybe/fediautomod/issues) for discussion.
