@@ -6,3 +6,4 @@ thresholds:
     threat: 0.8
     insult: 0.8
     identity_attack: 0.1
+keywords: []
