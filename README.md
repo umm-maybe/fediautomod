@@ -9,7 +9,7 @@ The bot is a simple Python script that watches a feed for status updates and use
 
 When Detoxify returns a score that exceeds a threshold set by the bot operator (in a config file), the status and its user are reported to the instance moderator.  Note that this action does not require administrator settings.  The bot should not be used to automatically remove statuses based upon algorithmic detection; being flagged and removed in error can lead users to feel silenced.  A human should always make the decision whether to take action regarding a report, and better yet be prepared to take other actions besides simply removing the content, such as offering support to whomever it hurt.
 
-#Prerequisites
+# Prerequisites
 You will need a server or other always-on computer to run this on, with Python and PyTorch installed (or at least installable).
 
 # Installation
