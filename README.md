@@ -17,6 +17,7 @@ You will need a server or other always-on computer to run this on, with Python a
 2. Create an account for the bot.  Tip: you can add "+botname" to the part of your e-mail address before the @ symbol when making a new account so that you don't have to also sign up for a new e-mail address every time.  Also, you can skip this and use your existing account, if you don't mind reports and automated posts coming from it (e.g. with an instance admin account).
 3. Logged in as the bot user, from the drop-down next to your profile name, select Prefereces, and then select Development.  Click on New Application and fill out the form (make sure you have Write:Reports checked).
 4. Copy the access token from the page presented to you when you're done.
-5. Open the config-example.yaml file and save it as whatever you want (e.g. config.yaml).  Paste your access token into the appropriate field. Save it after editing the API_URL
-6. Run pip install -r requirements.txt
-7. Run the bot with python3 automod.py config.yaml
+5. Open the config-example.yaml file and paste your access token in the appropriate place. Save the file under a new name e.g. "config.yaml" after setting masto_server to point to the URL of the Mastodon instance whose feed you wish to monitor.
+6. Create and enter a new Python environment with python3 -m venv env && source env/bin/activate
+7. Run pip install -r requirements.txt
+8. Run the bot with python3 automod.py config.yaml
