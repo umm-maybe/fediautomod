@@ -1,0 +1,5 @@
+mastodon
+bs4
+detoxify
+pyyaml
+langid

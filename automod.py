@@ -2,32 +2,59 @@ from mastodon import Mastodon, StreamListener
 from bs4 import BeautifulSoup
 from detoxify import Detoxify
 import torch
+import yaml
+import os, sys
+import langid
 
-cuda_available = torch.cuda.is_available()
-detox = Detoxify('multilingual', device='cuda' if cuda_available else 'cpu')
+## Load config details from YAML
+def load_yaml(filename):
+    with open(filename, 'r') as stream:
+        try:
+            return yaml.safe_load(stream)
+        except yaml.YAMLError as error:
+            print(error)
+    return None
+
+# pass the yaml-format config file as command-line argument
+config = load_yaml(sys.argv[1])
 
 #   Set up Mastodon
 mastodon = Mastodon(
-    access_token = 'PASTE_ACCESS_TOKEN_HERE',
-    api_base_url = 'https://mastodon.social/'
+    access_token = config['access_token'],
+    api_base_url = config['masto_server']
 )
 
+# Set up Detoxify
+cuda_available = torch.cuda.is_available()
+detox = Detoxify('unbiased-small', device='cuda' if cuda_available else 'cpu')
 
 class Listener(StreamListener):
     def on_update(self, status):
         toot_html = status['content']
         toot_soup = BeautifulSoup(toot_html)
         toot_text = toot_soup.get_text()
-        detox_out = detox.predict(toot_text)
-        hateScore = detox_out['severe_toxicity']
-        nsfwScore = detox_out['sexual_explicit']
         print(toot_text)
-        print(f'severe_toxicity: {hateScore}')
-        print(f'sexual_explicit: {nsfwScore}')
-        # if detox_out['severe_toxicity']>0.05 or detox_out['sexual_explicit']>0.8:
-        #     account_id = status['account']['id']
-        #     status_ids = [status['id'],]
-        #     mastodon.report(account_id,status_ids)
+        lang_code = langid.classify(toot_text)[0]
+        if lang_code=='en':
+            # use Detoxify
+            scores = detox.predict(toot_text)
+        else:
+            # no classification model available - pass
+            scores = None
+        if scores:
+            for attribute in config['thresholds'].keys():
+                score = scores[attribute]
+                print(f"{attribute}: {score}")
+                if score > config['thresholds'][attribute]:
+                     account_id = status['account']['id']
+                     status_ids = [status['id'],]
+                     mastodon.report(account_id,status_ids,comment="This report was made automatically.")
+                     mastodon.status_post(
+                         status="This status update has been reported to admins for toxic language.",
+                         in_reply_to_id=status['id'],
+                         visibility="private"
+                     )
+                     break # no need to continue checking
 
 listener = Listener()
 mastodon.stream_local(listener)
