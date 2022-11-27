@@ -27,5 +27,7 @@ You will need a server or other always-on computer to run this on, with Python a
 # Configuration options
 You can edit the YAML-format configuration file to set which Detoxify labels you want to monitor and at which threshold values you want to report status updates. Detoxify scores are like probabilities, so setting a number like 0.8 means report if the model is 80% sure that an update is toxic. Though not shown in the example file, Detoxify has a `sexual_explicit` label that could be used to flag NSFW language in instances where that behavior violates server rules.  Adding this label to the config file would include it in the list of attributes to monitor; likewise the bot will not pay attention to attributes that are removed from the list.
 
+You can also set `keywords` to a list of forbidden words that must not be used under any circumstances on your instance. This will pre-empt toxicity evaluation; meaning that the script will look for negative keywords first and skip running Detoxify if it finds one.
+
 # Limitations
 Currently the bot only works in English.  It also does nothing with images. See [issues](https://github.com/umm-maybe/fediautomod/issues) for discussion.
