@@ -14,7 +14,7 @@ When Detoxify returns a score that exceeds a threshold set by the bot operator (
 The bot should not be used to automatically remove statuses based upon algorithmic detection; being flagged and removed in error can lead users to feel silenced. A human should always make the decision whether to take action regarding a report, and better yet be prepared to take other actions besides simply removing the content, such as offering support to whomever it hurt.
 
 # Prerequisites
-You will need a server or other always-on computer to run this on, with Python and PyTorch installed (or at least installable).
+You will need a server or other always-on computer to run this on, with Python and PyTorch installed (or at least installable).  If you self-host your Mastodon instance, you can probably run it right there, unless it is really close to RAM capacity already.
 
 # Installation
 1. Clone the repository with `git clone http://github.com/umm-maybe/fediautomod`
